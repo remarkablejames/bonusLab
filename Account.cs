@@ -24,19 +24,18 @@ namespace Bank
 
 
 
-        public virtual void withdraw(decimal amount, Account account)
+        public virtual void Withdraw(decimal amount, Account account)
         {
 
-            if (account is SavingsAccount)
+            if (account is SavingsAccount && Balance > amount + 10)
             {
                 SavingsAccount savingsAccount = (SavingsAccount)account;
                 Balance = Balance - amount - 10;
+                Console.WriteLine($"You have withdrawn {amount} from your {account} account. service charge of 10 is deducted. Your balance is {Balance}");
             }
             else
             {
-
-                // the withdraws amount should not be greater than the balance or greater than 3000  <================================================
-                Balance += amount;
+                Console.WriteLine("You cannot withdraw more than your balance");
             }
         }
 

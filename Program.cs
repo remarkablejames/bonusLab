@@ -53,16 +53,33 @@ namespace BankApplication
                         if (account == "checking")
                         {
                             checkingAccount.Deposit(amount, checkingAccount);
+                            Console.WriteLine($"You have deposited {checkingAccount.Balance} to your {account} account");
                         }
                         else
                         {
                             savingsAccount.Deposit(amount, savingsAccount);
+                            Console.WriteLine($"You have deposited {savingsAccount.Balance} to your {account} account");
                         }
-                        Console.WriteLine($"You have deposited {savingsAccount.Balance} to your {account} account");
+
 
                         break;
                     case 2:
                         Console.WriteLine("Withdraw");
+                        // prompt user to enter the account
+                        account = Utils.chooseAccount();
+                        // prompt user to enter the amount
+                        amount = Utils.getAmount();
+
+                        if (account == "checking")
+                        {
+                            checkingAccount.Withdraw(amount, checkingAccount);
+
+                        }
+                        else
+                        {
+                            savingsAccount.Withdraw(amount, savingsAccount);
+
+                        }
                         break;
                     case 3:
                         Console.WriteLine("Transfer");
