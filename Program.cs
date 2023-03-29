@@ -1,120 +1,64 @@
 ﻿using System;
-
+using Bank;
 namespace BankApplication
 {
-    public abstract class Account
-    {
-        public string AccountNumber { get; set; }
-        public string AccountHolderName { get; set; }
-        public double Balance { get; set; }
-
-        public virtual void Deposit(double amount)
-        {
-            Balance += amount;
-        }
-
-        public virtual void Withdraw(double amount)
-        {
-            Balance -= amount;
-        }
-
-        public abstract void Transfer(double amount, Account account);
-    }
-
-    public class CheckingAccount : Account
-    {
-        public CheckingAccount(string accountNumber, string accountHolderName, double balance)
-        {
-            AccountNumber = accountNumber;
-            AccountHolderName = accountHolderName;
-            Balance = balance;
-        }
-
-        public override void Transfer(double amount, Account account)
-        {
-            if (account is SavingsAccount)
-            {
-                SavingsAccount savingsAccount = (SavingsAccount)account;
-                Withdraw(amount);
-                savingsAccount.Deposit(amount);
-            }
-            else
-            {
-                Console.WriteLine("Invalid account type selected for transfer.");
-            }
-        }
-    }
-
-    public class SavingsAccount : Account
-    {
-        public SavingsAccount(string accountNumber, string accountHolderName, double balance)
-        {
-            AccountNumber = accountNumber;
-            AccountHolderName = accountHolderName;
-            Balance = balance;
-        }
-
-        public override void Transfer(double amount, Account account)
-        {
-            if (account is CheckingAccount)
-            {
-                CheckingAccount checkingAccount = (CheckingAccount)account;
-                Withdraw(amount);
-                checkingAccount.Deposit(amount);
-            }
-            else
-            {
-                Console.WriteLine("Invalid account type selected for transfer.");
-            }
-        }
-    }
 
     class Program
     {
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to the Bank Application");
-            Console.WriteLine("Please enter your name: ");
-            string name = Console.ReadLine();
-
-            CheckingAccount checkingAccount = new CheckingAccount("123456", name, 5000);
-            SavingsAccount savingsAccount = new SavingsAccount("789012", name, 10000);
-
-            Console.WriteLine("Which account do you want to use? Enter 1 for checking or 2 for savings:");
-            int accountChoice = int.Parse(Console.ReadLine());
-
-            Account account = accountChoice == 1 ? (Account)checkingAccount : savingsAccount;
-
-            Console.WriteLine("What operation do you want to perform? Enter 1 for deposit, 2 for withdraw, or 3 for transfer:");
-            int operationChoice = int.Parse(Console.ReadLine());
-
-            switch (operationChoice)
+            // prompt the user to enter their name and make sure its not empty or null or any other invalid value
+            Console.Write("Enter your name: ");
+            string? name = Console.ReadLine();
+            while (string.IsNullOrEmpty(name))
             {
-                case 1:
-                    Console.WriteLine("Enter amount to deposit: ");
-                    double depositAmount = double.Parse(Console.ReadLine());
-                    account.Deposit(depositAmount);
-                    Console.WriteLine($"New balance: {account.Balance:C}");
-                    break;
-                case 2:
-                    Console.WriteLine("Enter amount to withdraw: ");
-                    double withdrawAmount = double.Parse(Console.ReadLine());
-                    account.Withdraw(withdrawAmount);
-                    Console.WriteLine($"New balance: {account.Balance:C}");
-                    break;
-                case 3:
-                    Console.WriteLine("Enter amount to transfer: ");
-                    double transferAmount = double.Parse(Console.ReadLine());
-                    Console.WriteLine("Which account do you want to transfer to? Enter 1 for checking or 2 for savings:");
-                    int transferAccountChoice = int.Parse(Console.ReadLine());
-                    Account transferAccount = transferAccountChoice == 1 ? (Account)checkingAccount : savingsAccount;
-                    account.Transfer(transferAmount,
-                        transferAccount);
-                    Console.WriteLine($"New balance: {account.Balance:C}");
-                    break;
-                default:
-                    Console.WriteLine("Invalid operation selected.");
-                    break;
+                Console.Write("Invalid name. Please enter your name: ");
+                name = Console.ReadLine();
+            }
+
+            // prompt the user to choose from the available options: deposit, withdraw, transfer,account activity, check balance, exit. use loop to keep prompting the user until they choose to exit
+
+            while (true)
+            {
+                Console.WriteLine("Choose from the following options:");
+                Console.WriteLine("1. Deposit");
+                Console.WriteLine("2. Withdraw");
+                Console.WriteLine("3. Transfer");
+                Console.WriteLine("4. Account Activity Enquiry");
+                Console.WriteLine("5. Balance Enquiry");
+                Console.WriteLine("6. Exit");
+                Console.Write("Please enter your selection (1 to 6): ");
+                int? choice = int.TryParse(Console.ReadLine(), out int choiceValue) ? choiceValue : null;
+                while (choice == null || choice < 1 || choice > 6)
+                {
+                    Console.Write("Invalid choice. Please enter your choice: ");
+                    choice = int.TryParse(Console.ReadLine(), out choiceValue) ? choiceValue : null;
+                }
+
+                switch (choice)
+                {
+                    case 1:
+                        Console.WriteLine("Deposit");
+                        break;
+                    case 2:
+                        Console.WriteLine("Withdraw");
+                        break;
+                    case 3:
+                        Console.WriteLine("Transfer");
+                        break;
+                    case 4:
+                        Console.WriteLine("Account Activity Enquiry");
+                        break;
+                    case 5:
+                        Console.WriteLine("Balance Enquiry");
+                        break;
+                    case 6:
+                        Console.WriteLine("Thank you for using the Bank Application. Goodbye!");
+                        return;
+                }
+
+
             }
         }
     }

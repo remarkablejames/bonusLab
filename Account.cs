@@ -2,30 +2,17 @@ namespace Bank
 {
     // define a base class called Account which will be inherited by other classes like savings account, checking account etc.
 
-    public class Account
+    public abstract class Account
     {
-        // define the properties of the class
         public string AccountNumber { get; set; }
-        public string AccountName { get; set; }
+        public string AccountHolderName { get; set; }
         public double Balance { get; set; }
 
-        // define a constructor
-        public Account(string accountNumber, string accountName, double balance)
+        public virtual void Deposit(double amount, double interestRate = 1)
         {
-            AccountNumber = accountNumber;
-            AccountName = accountName;
-            Balance = balance;
-        }
-
-        // define a method to deposit money
-        public void Deposit(double amount, double intrestRate = 1)
-        {
-            // calculate the intrest and add it to the amount
-            if (intrestRate > 1)
+            if (interestRate > 1)
             {
-                double intrest = amount * intrestRate / 100;
-                amount += intrest;
-                Balance += amount;
+                Balance += amount * interestRate;
             }
             else
             {
@@ -33,10 +20,11 @@ namespace Bank
             }
         }
 
-        // define a method to withdraw money
-        public void Withdraw(double amount)
+        public virtual void Withdraw(double amount)
         {
             Balance -= amount;
         }
+
+        public abstract void Transfer(double amount, Account account);
     }
 }
