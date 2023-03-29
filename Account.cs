@@ -22,9 +22,22 @@ namespace Bank
             }
         }
 
-        public virtual void Withdraw(decimal amount)
+
+
+        public virtual void withdraw(decimal amount, Account account)
         {
-            Balance -= amount;
+
+            if (account is SavingsAccount)
+            {
+                SavingsAccount savingsAccount = (SavingsAccount)account;
+                Balance = Balance - amount - 10;
+            }
+            else
+            {
+
+                // the withdraws amount should not be greater than the balance or greater than 3000  <================================================
+                Balance += amount;
+            }
         }
 
         public abstract void Transfer(decimal amount, Account account);
