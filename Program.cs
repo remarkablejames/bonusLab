@@ -89,6 +89,11 @@ namespace BankApplication
                         break;
                     case 5:
                         Console.WriteLine("Balance Enquiry");
+                        // display the balance of both accounts in a table format.
+                        Console.WriteLine("Account Number\t\tAccount Holder Name\tBalance");
+                        Console.WriteLine($"{checkingAccount.AccountNumber}\t\t{checkingAccount.AccountHolderName}\t\t\t{checkingAccount.Balance}");
+                        Console.WriteLine($"{savingsAccount.AccountNumber}\t\t{savingsAccount.AccountHolderName}\t\t\t{savingsAccount.Balance}");
+
                         break;
                     case 6:
                         Console.WriteLine("Thank you for using the Bank Application. Goodbye!");

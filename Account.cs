@@ -31,7 +31,7 @@ namespace Bank
             {
                 SavingsAccount savingsAccount = (SavingsAccount)account;
                 Balance = Balance - amount - 10;
-                Console.WriteLine($"You have withdrawn {amount} from your {account} account. service charge of 10 is deducted. Your balance is {Balance}");
+                Console.WriteLine($"You have withdrawn {amount} from your Savings account. service charge of 10 is deducted. Your balance is {Balance}");
             }
             else
             {
