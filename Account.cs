@@ -10,10 +10,7 @@ namespace Bank
 
         public virtual void Deposit(decimal amount, Account account)
         {
-            // if (interestRate > 1)
-            // {
-            //     Balance += amount * (decimal)interestRate;
-            // }
+
             if (account is SavingsAccount)
             {
                 SavingsAccount savingsAccount = (SavingsAccount)account;
