@@ -17,6 +17,11 @@ namespace BankApplication
                 name = Console.ReadLine();
             }
 
+            // create instances of the checking and savings accounts
+
+            CheckingAccount checkingAccount = new CheckingAccount("123456789", name, 0);
+            SavingsAccount savingsAccount = new SavingsAccount("987654321", name, 0);
+
             // prompt the user to choose from the available options: deposit, withdraw, transfer,account activity, check balance, exit. use loop to keep prompting the user until they choose to exit
 
             while (true)
@@ -40,6 +45,21 @@ namespace BankApplication
                 {
                     case 1:
                         Console.WriteLine("Deposit");
+                        // prompt user to enter the account
+                        string account = Utils.chooseAccount();
+                        // prompt user to enter the amount
+                        decimal amount = Utils.getAmount();
+
+                        if (account == "checking")
+                        {
+                            checkingAccount.Deposit(amount, checkingAccount);
+                        }
+                        else
+                        {
+                            savingsAccount.Deposit(amount, savingsAccount);
+                        }
+                        Console.WriteLine($"You have deposited {savingsAccount.Balance} to your {account} account");
+
                         break;
                     case 2:
                         Console.WriteLine("Withdraw");
@@ -61,6 +81,10 @@ namespace BankApplication
 
             }
         }
+
+
+
+
     }
 }
 

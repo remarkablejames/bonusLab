@@ -6,13 +6,18 @@ namespace Bank
     {
         public string AccountNumber { get; set; }
         public string AccountHolderName { get; set; }
-        public double Balance { get; set; }
+        public decimal Balance { get; set; }
 
-        public virtual void Deposit(double amount, double interestRate = 1)
+        public virtual void Deposit(decimal amount, Account account)
         {
-            if (interestRate > 1)
+            // if (interestRate > 1)
+            // {
+            //     Balance += amount * (decimal)interestRate;
+            // }
+            if (account is SavingsAccount)
             {
-                Balance += amount * interestRate;
+                SavingsAccount savingsAccount = (SavingsAccount)account;
+                Balance = Balance + amount + amount * (decimal)savingsAccount.InterestRate;
             }
             else
             {
@@ -20,11 +25,11 @@ namespace Bank
             }
         }
 
-        public virtual void Withdraw(double amount)
+        public virtual void Withdraw(decimal amount)
         {
             Balance -= amount;
         }
 
-        public abstract void Transfer(double amount, Account account);
+        public abstract void Transfer(decimal amount, Account account);
     }
 }

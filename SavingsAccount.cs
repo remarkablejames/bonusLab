@@ -3,21 +3,28 @@ namespace Bank
     public class SavingsAccount : Account
     {
 
-        private static double interestRate = 0.03;
-        public SavingsAccount(string accountNumber, string accountHolderName, double balance)
+        private static double interestRate = 0.05;
+
+        public double InterestRate
+        {
+            get { return interestRate; }
+        }
+
+
+        public SavingsAccount(string accountNumber, string accountHolderName, decimal balance)
         {
             AccountNumber = accountNumber;
             AccountHolderName = accountHolderName;
             Balance = balance;
         }
 
-        public override void Transfer(double amount, Account account)
+        public override void Transfer(decimal amount, Account account)
         {
             if (account is CheckingAccount)
             {
                 CheckingAccount checkingAccount = (CheckingAccount)account;
                 Withdraw(amount);
-                checkingAccount.Deposit(amount);
+                // checkingAccount.Deposit(amount);
             }
             else
             {
